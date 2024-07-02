@@ -1,0 +1,47 @@
+version: "1.1"
+
+services:
+# Django
+  prueba_django:
+    image: python:3.9.5
+
+    container_name: prueba_djangoISDM
+
+    restart: always
+
+    volumes:
+    
+      - type: bind
+        source: .
+        target: /opt/back_end
+
+    ports:
+        - "8000:8000"
+
+    stdin_open: true
+    tty: true
+
+  # Mysql
+  db:
+    image: mysql:latest
+    container_name: mysql_database
+    restart: always
+    volumes: 
+      - mysql_data:/var/lib/mysql
+    environment:
+
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=mydatabase
+
+  # phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=12345
+
+volumes:
+  mysql_data:
