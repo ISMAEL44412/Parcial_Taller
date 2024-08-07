@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>edit category</h1>
+    <div>
+        {% load static %}
+        
+        <a href="/category">Display</a>
+
+        <form method="POST" action="{% url  'categoryupdate'%}"  id="myform" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="hidden" name="txt1" value="{{categories.0}}" >
+        Name  <input type="text" name="txt2" value="{{categories.1}}">
+        <br/>
+            <button type="submit" >Update Data</button>
+        </form>
+    </div>
+
+</body>
+</html>
