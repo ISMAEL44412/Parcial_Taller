@@ -1,47 +1,49 @@
-version: "1.1"
+version: '3.1'
 
 services:
-# Django
+  db:
+    image: mysql
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: db_ecom_stock
+      MYSQL_PASSWORD: 12345
+    volumes:
+      - .mysql_data:/var/lib/mysql:rw
+    networks:
+      - network1
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_conteiner
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - network1
+    depends_on:
+      - db
+
   prueba_django:
     image: python:3.9.5
-
     container_name: prueba_djangoISDM
-
     restart: always
-
     volumes:
-    
       - type: bind
         source: .
         target: /opt/back_end
-
     ports:
         - "8000:8000"
-
     stdin_open: true
     tty: true
 
-  # Mysql
-  db:
-    image: mysql:latest
-    container_name: mysql_database
-    restart: always
-    volumes: 
-      - mysql_data:/var/lib/mysql
-    environment:
+    networks:
+      - network1
 
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_DATABASE=mydatabase
+networks:
+  network1:
+    driver: bridge
 
-  # phpmyadmin
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_container
-    ports:
-      - "8080:80"
-    environment:
-      - PMA_HOST=db
-      - MYSQL_ROOT_PASSWORD=12345
-
-volumes:
-  mysql_data:
