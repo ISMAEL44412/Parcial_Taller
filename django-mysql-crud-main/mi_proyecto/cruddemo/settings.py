@@ -79,11 +79,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_ecom_stock',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PASSWORD': '12345',
+        'HOST': 'db',
     }
 }
+
 
 
 # Password validation
